@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        html, body { width:100%; height:100%; }
+        canvas { display:block; width:100%; height:100%; }
+    </style>
+</head>
+<body>
+    <canvas  id='mainCanvas'></canvas>
+    <img src="./assets/road.png" id="road" hidden>
+    <img src="./assets/car.png" id="car" hidden>
+    <img src="./assets/los.png" id="los" hidden>
+    <img src="assets/crossing.png" id="crossing" hidden>
+    <img src="./assets/road_barrier.png" id="road_barrier" hidden>
+<!--    <img src="./assets/grass2.png" id="grass" hidden>-->
+    <img src="./assets/light.jpg" id="light" hidden>
+
+    <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+    <script src="https://webglfundamentals.org/webgl/resources/m4.js"></script>
+    <script src="./src/object.js"></script>
+    <script src="./src/utils.js"></script>
+    <script src="./src/index.js" type="module"></script>
+</body>
+</html>
