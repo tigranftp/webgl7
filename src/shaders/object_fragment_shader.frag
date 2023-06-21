@@ -6,7 +6,7 @@ uniform vec3 carLightPosition;
 uniform sampler2D u_texture;
 
 uniform vec3 lights_position[10];
-uniform vec3 u_carBackLightsPosition[2];
+uniform vec3 u_carBackLightsPosition[6];
 
 varying vec2 textcoord;
 varying float constant;
@@ -15,6 +15,8 @@ varying vec3 FragPos;
 varying vec3 realPos;
 varying vec3 vertPos;
 uniform float u_onLamps;
+uniform float u_onBackLights;
+uniform float u_LightsPower;
 
 uniform float brightness;
 void main () {
@@ -37,24 +39,39 @@ void main () {
 
     gl_FragColor = vec4(1.0 * vec3(0, 0, 0.1) +
                       1.0 * lambertian * objectColor +
-                      1.0 * 0.01 * vec3(1.0, 1.0, 1.0), 1.0);
+                      1.0 * 0.1 * lightColor, 1.0);
 
 
 
     vec3 spotlight_direction = vec3(0,-1,0);
 
-        for(int i = 0; i < 2; i++){
+
+
+   if (u_onBackLights == 1.0) {
+        for(int i = 0; i < 6; i++){
+            if (i>3) {
+                spotlight_direction = normalize(vec3(0,-0.7,-1));
+                }
+
+            if (i>1) {
+               // spotlight_direction = normalize(vec3(0,-1,1));
+                }
             vec3 light_pos = u_carBackLightsPosition[i];
             vec3 to_frag = normalize(realPos - light_pos);
             float angle_cos = dot(normalize(spotlight_direction), normalize(to_frag));
+            vec4 colorOfLight = vec4(u_LightsPower,0.0,0.0,0.001);
+            if (i>1) {
+                colorOfLight = vec4(u_LightsPower,u_LightsPower,u_LightsPower,0.001);
+            }
 
             if(angle_cos >= 0.4){
-                gl_FragColor += pow(angle_cos,10.0) * vec4(objectColor,1) * vec4(1.0,0.0,0.0,0.001);
+                gl_FragColor += pow(angle_cos,10.0) * vec4(objectColor,1) * colorOfLight;
             }
         }
+   }
 
 
-
+   spotlight_direction = vec3(0,-1,0);
    if (u_onLamps!= 1.0) {
        return;
    }
@@ -66,7 +83,7 @@ void main () {
         float angle_cos = dot(normalize(spotlight_direction), normalize(to_frag));
 
         if(angle_cos >= 0.4){
-            gl_FragColor += pow(angle_cos,10.0) * vec4(objectColor,1) * vec4(1,1.0,0.0,0.001);
+            gl_FragColor += pow(angle_cos,10.0) * vec4(objectColor,1) * vec4(u_LightsPower,u_LightsPower,0.0,0.001);
         }
     }
 

@@ -7,6 +7,9 @@ import Light from "./light";
 const gameState = {
     onLamps: true,
     onMoon: true,
+    onBackLights: true,
+    brightness: 2.0,
+    lightsPower: 1.0,
     event: {
         pressedButtonChar: ''
     }
@@ -53,7 +56,9 @@ obstacles.push(obstacle, obstacle2)
 
 let carLights = {
     left: null,
-    right: null
+    right: null,
+    frontLeft: null,
+    frontRight: null,
 }
 
 let car = new Car(obstacles,
@@ -89,6 +94,25 @@ function start() {
                 break;
             case '+':
                 gameState.onMoon = !gameState.onMoon;
+                break;
+            case '*':
+                gameState.onBackLights = !gameState.onBackLights
+                break;
+            case '9':
+                gameState.lightsPower += 0.1
+                if (gameState.lightsPower >= 1.0)
+                    gameState.lightsPower = 1.0
+                break;
+            case '6':
+                gameState.lightsPower -= 0.1
+                if (gameState.lightsPower <= 0.0)
+                    gameState.lightsPower = 0.0
+                break;
+            case '8':
+                gameState.brightness += 0.5
+                break;
+            case '5':
+                gameState.brightness -= 0.5
                 break;
         }
     }

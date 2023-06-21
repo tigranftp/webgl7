@@ -24,6 +24,10 @@ class Item {
         const result = [];
         result.push( CarBackLights.left.position.x,  CarBackLights.left.position.y,  CarBackLights.left.position.z);
         result.push( CarBackLights.right.position.x,  CarBackLights.right.position.y,  CarBackLights.right.position.z);
+        result.push( CarBackLights.lightLeft.position.x,  CarBackLights.lightLeft.position.y,  CarBackLights.lightLeft.position.z);
+        result.push( CarBackLights.lightRight.position.x,  CarBackLights.lightRight.position.y,  CarBackLights.lightRight.position.z);
+        result.push( CarBackLights.frontLeft.position.x,  CarBackLights.frontLeft.position.y,  CarBackLights.frontLeft.position.z);
+        result.push( CarBackLights.frontRight.position.x,  CarBackLights.frontRight.position.y,  CarBackLights.frontRight.position.z);
         return result;
     }
 
@@ -42,7 +46,7 @@ class Item {
         this.bufferInfo = webglUtils.createBufferInfoFromArrays(gl, data);
 
         this.cameraTarget = [0, 0, 0];
-        this.cameraPosition = [60, 15, -15];
+        this.cameraPosition = [30, 15, -15];
         this.zNear = 0.1;
         this.zFar = 180;
 
@@ -180,7 +184,9 @@ class Item {
 
         const sharedUniforms = {
             u_onLamps: gameState.onLamps ? 1.0 : 0.0,
+            u_onBackLights: gameState.onBackLights ? 1.0 : 0.0,
             u_carBackLightsPosition: this.getCarBackLightsPosition(carBackLights),
+            u_LightsPower: gameState.lightsPower,
             u_lightPos: [-100, 100, 100],
             u_view: view2,
             u_projection: projection,
@@ -203,7 +209,7 @@ class Item {
             u_world: m4.yRotation(2),
             u_diffuse: [1, 0.7, 0.5, 1],
             lights_position: this.getLightsPosition(),
-            brightness: this.brightness,
+            brightness: gameState.brightness,
         });
 
         webglUtils.drawBufferInfo(gl, this.bufferInfo);

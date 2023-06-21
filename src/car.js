@@ -29,6 +29,10 @@ class Car extends Item {
 
         carLights.left = new Transform(new Vector3(-2.5, 5.5, 19.5), new Vector3(0, 0, 0), new Vector3(0, 0, 0));
         carLights.right = new Transform(new Vector3(2.5, 5.5, 19.5), new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+        carLights.lightLeft = new Transform(new Vector3(-2.5, 5.5, 0.5), new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+        carLights.lightRight = new Transform(new Vector3(2.5, 5.5, 0.5), new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+        carLights.frontLeft = new Transform(new Vector3(-2.5, 5.5, 0.5), new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+        carLights.frontRight = new Transform(new Vector3(2.5, 5.5, -0.5), new Vector3(0, 0, 0), new Vector3(0, 0, 0));
 
         this._carLights = carLights
         this._obstacles = obstacles;
@@ -39,7 +43,10 @@ class Car extends Item {
     changeCarLightsX(delta) {
         this._carLights.left.position.x += delta
         this._carLights.right.position.x += delta
-        console.log(this._carLights)
+        this._carLights.lightLeft.position.x += delta
+        this._carLights.lightRight.position.x += delta
+        this._carLights.frontLeft.position.x += delta
+        this._carLights.frontRight.position.x += delta
     }
 
     /**
@@ -92,15 +99,6 @@ class Car extends Item {
             }
         }
 
-        // set slow
-
-        // if(Math.abs(this.transform.position.x) > 13 ){
-        //     this._isSlow = true;
-        //     this._setSlowEvent();
-        // }
-        // else if(this._isSlow){
-        //     this._setFastEvent();
-        // }
     }
 }
 
